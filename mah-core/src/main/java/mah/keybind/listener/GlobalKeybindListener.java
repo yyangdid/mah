@@ -1,6 +1,5 @@
 package mah.keybind.listener;
 
-import mah.keybind.KeybindManager;
 import mah.ui.key.KeystateManager;
 import mah.ui.window.Window;
 import mah.ui.window.WindowManager;
@@ -17,6 +16,7 @@ import java.util.logging.Logger;
 /**
  * Created by zgq on 2017-01-09 09:36
  */
+@Deprecated
 public class GlobalKeybindListener extends SwingKeyAdapter {
 
     private org.slf4j.Logger logger = LoggerFactory.getLogger(GlobalKeybindListener.class);
@@ -77,7 +77,7 @@ public class GlobalKeybindListener extends SwingKeyAdapter {
         }
         KeyStroke keyStroke = KeyStroke.getKeyStroke(javaKeyCode, mask);
         logger.info("press " + keyStroke);
-        KeybindManager.getInstance().tryExecuteGlobalAction(keyStroke);
+//        KeybindManager.getInstance().tryExecuteGlobalAction(keyStroke);
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {

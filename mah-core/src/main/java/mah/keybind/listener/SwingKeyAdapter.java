@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
  *
  * @since 2.1
  */
+@Deprecated
 public abstract class SwingKeyAdapter implements NativeKeyListener {
 
 

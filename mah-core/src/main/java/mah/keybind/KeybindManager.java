@@ -1,5 +1,7 @@
 package mah.keybind;
 
+import com.tulskiy.keymaster.common.HotKeyListener;
+import com.tulskiy.keymaster.common.Provider;
 import mah.action.Action;
 import mah.action.ActionException;
 import mah.action.ActionManager;
@@ -32,7 +34,7 @@ public class KeybindManager implements ApplicationListener {
     private final Map<String, List<Keybind>> KEYBINDS = new HashMap<>();
     private Mode currentMode;
     private int keyIndex;
-    private final List<Keybind> GLOBAL_KEYBINDS = new ArrayList<>();
+    //    private final List<Keybind> GLOBAL_KEYBINDS = new ArrayList<>();
     private static final KeybindManager INSTANCE = new KeybindManager();
     private List<Keybind> currentKeybind;
 
@@ -49,8 +51,11 @@ public class KeybindManager implements ApplicationListener {
         return INSTANCE;
     }
 
-    public void addGlobalKeybind(Keybind keybinds) {
-        GLOBAL_KEYBINDS.add(keybinds);
+    public void addGlobalKeybind(Keybind keybind) {
+        final Provider provider = Provider.getCurrentProvider(true);
+        final HotKeyListener listener = hotKey -> ActionManager.getInstance().handleAction(keybind.getAction());
+        KeyStroke keyStroke = keybind.getKeyStrokes().get(0);
+        provider.register(keyStroke, listener);
     }
 
     private void registerGlobalKeybinds(Document document) {
@@ -175,14 +180,14 @@ public class KeybindManager implements ApplicationListener {
         }
     }
 
-    private Action findGlobalAction(KeyStroke pressedKeyStroke) {
-        return findAction(GLOBAL_KEYBINDS, pressedKeyStroke);
-    }
+//    private Action findGlobalAction(KeyStroke pressedKeyStroke) {
+//        return findAction(GLOBAL_KEYBINDS, pressedKeyStroke);
+//    }
 
-    public void tryExecuteGlobalAction(KeyStroke keyStroke) {
-        Action action = findGlobalAction(keyStroke);
-        if (action != null) {
-            ActionManager.getInstance().handleAction(action);
-        }
-    }
+//    public void tryExecuteGlobalAction(KeyStroke keyStroke) {
+//        Action action = findGlobalAction(keyStroke);
+//        if (action != null) {
+//            ActionManager.getInstance().handleAction(action);
+//        }
+//    }
 }
